@@ -4,7 +4,7 @@ const Like = (props) => {
 
   return (
     <i
-      onClick={props.onClick}
+      onClick={props.handleLike}
       style={{ cursor: "pointer" }}
       className={classes}
     ></i>

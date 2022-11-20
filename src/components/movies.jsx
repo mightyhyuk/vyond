@@ -44,7 +44,7 @@ class Movies extends Component {
                   <td>
                     <Like
                       liked={movie.liked}
-                      onClick={() => this.handleLike(movie)}
+                      handleLike={() => this.handleLike(movie)}
                     />
                   </td>
                   <td>
@@ -64,7 +64,7 @@ class Movies extends Component {
           itemCount={count}
           pageSize={pageSize}
           currentPage={currentPage}
-          onPageChange={this.handlePageChange}
+          handlePageChange={this.handlePageChange}
         />
       </>
     );
