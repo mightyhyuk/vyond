@@ -1,8 +1,9 @@
 const Pagination = (props) => {
   const { itemCount, pageSize, onPageChange, currentPage } = props;
-  console.log(currentPage);
+
   const pageCount = Math.ceil(itemCount / pageSize);
   if (pageCount === 1) return null;
+
   const pages = [];
   for (let i = 1; i <= pageCount; i++) pages.push(i);
 
