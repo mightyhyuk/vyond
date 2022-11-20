@@ -1,23 +1,12 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
+import Pagination from "./common/pagination";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
-  };
-
-  handleDelete = (movie) => {
-    const movies = this.state.movies.filter((m) => m._id !== movie._id);
-    this.setState({ movies });
-  };
-
-  handleLike = (movie) => {
-    const movies = [...this.state.movies];
-    const index = movies.indexOf(movie);
-    movies[index] = { ...movies[index] };
-    movies[index].liked = !movies[index].liked;
-    this.setState({ movies });
+    pageSize: 4,
   };
 
   render() {
@@ -64,9 +53,31 @@ class Movies extends Component {
             })}
           </tbody>
         </table>
+        <Pagination
+          itemCount={this.state.movies.length}
+          pageSize={this.state.pageSize}
+          onPageChange={() => this.handlePageChange(this.state.pageSize)}
+        />
       </>
     );
   }
+
+  handleDelete = (movie) => {
+    const movies = this.state.movies.filter((m) => m._id !== movie._id);
+    this.setState({ movies });
+  };
+
+  handleLike = (movie) => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
+  };
+
+  handlePageChange = (page) => {
+    console.log(page);
+  };
 }
 
 export default Movies;
