@@ -12,27 +12,32 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
+    selectedGenre: { _id: "", name: "All" },
   };
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, selectedGenre, movies } = this.state;
 
     if (count === 0) return <p>There are no movies in the DB.</p>;
 
-    const movies = paginate(this.state.movies, currentPage, pageSize);
+    const filteredMovies = selectedGenre._id
+      ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
+      : movies;
+
+    const paginatedMovies = paginate(filteredMovies, currentPage, pageSize);
 
     return (
       <div className="row">
         <div className="col-2">
           <ListGroup
             items={this.state.genres}
-            selectedItem={this.state.selectedGenre}
+            selectedItem={selectedGenre}
             handleItemSelect={this.handleGenreSelect}
           />
         </div>
         <div className="col">
-          <p>Showing {count} movies in the database.</p>
+          <p>Showing {filteredMovies.length} movies in the database.</p>
           <table className="table">
             <thead>
               <tr>
@@ -45,7 +50,7 @@ class Movies extends Component {
               </tr>
             </thead>
             <tbody>
-              {movies.map((movie) => {
+              {paginatedMovies.map((movie) => {
                 return (
                   <tr key={movie._id}>
                     <td>{movie.title}</td>
@@ -72,7 +77,7 @@ class Movies extends Component {
             </tbody>
           </table>
           <Pagination
-            itemCount={count}
+            itemCount={filteredMovies.length}
             pageSize={pageSize}
             currentPage={currentPage}
             handlePageChange={this.handlePageChange}
@@ -83,7 +88,9 @@ class Movies extends Component {
   }
 
   componentDidMount() {
-    this.setState({ movies: getMovies(), genres: getGenres() });
+    const genres = [this.state.selectedGenre, ...getGenres()];
+
+    this.setState({ movies: getMovies(), genres });
   }
 
   handleDelete = (movie) => {
@@ -104,7 +111,7 @@ class Movies extends Component {
   };
 
   handleGenreSelect = (genre) => {
-    this.setState({ selectedGenre: genre });
+    this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 }
 
