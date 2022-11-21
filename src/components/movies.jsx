@@ -27,6 +27,8 @@ class Movies extends Component {
         <div className="col-2">
           <ListGroup
             items={this.state.genres}
+            nameProp="name"
+            idProp="_id"
             handleItemSelect={this.handleGenreSelect}
           />
         </div>
