@@ -42,6 +42,7 @@ class Movies extends Component {
             movies={paginatedMovies}
             handleDelete={this.handleDelete}
             handleLike={this.handleLike}
+            handleSort={this.handleSort}
           />
           <Pagination
             itemCount={filteredMovies.length}
@@ -79,6 +80,10 @@ class Movies extends Component {
 
   handleGenreSelect = (genre) => {
     this.setState({ selectedGenre: genre, currentPage: 1 });
+  };
+
+  handleSort = (path) => {
+    console.log(path);
   };
 }
 

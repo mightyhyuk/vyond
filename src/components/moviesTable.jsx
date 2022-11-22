@@ -1,16 +1,16 @@
 import Like from "./common/like";
 
 const MoviesTable = (props) => {
-  const { movies, handleDelete, handleLike } = props;
+  const { movies, handleDelete, handleLike, handleSort } = props;
 
   return (
     <table className="table">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Genre</th>
-          <th>Stock</th>
-          <th>Rate</th>
+          <th onClick={() => handleSort("title")}>Title</th>
+          <th onClick={() => handleSort("genre.name")}>Genre</th>
+          <th onClick={() => handleSort("numberInStock")}>Stock</th>
+          <th onClick={() => handleSort("dailyRentalRate")}>Rate</th>
           <th></th>
           <th></th>
         </tr>
