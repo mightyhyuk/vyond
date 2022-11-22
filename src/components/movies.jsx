@@ -3,8 +3,8 @@ import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
-import { paginate } from "../utils/paginate";
 import MoviesTable from "./moviesTable";
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   state = {
@@ -13,11 +13,13 @@ class Movies extends Component {
     currentPage: 1,
     pageSize: 4,
     selectedGenre: { _id: "", name: "All" },
+    sortColumn: { path: "title", order: "asc" },
   };
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, selectedGenre, movies } = this.state;
+    const { movies, currentPage, pageSize, selectedGenre, sortColumn } =
+      this.state;
 
     if (count === 0) return <p>There are no movies in the DB.</p>;
 
@@ -25,7 +27,24 @@ class Movies extends Component {
       ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
       : movies;
 
-    const paginatedMovies = paginate(filteredMovies, currentPage, pageSize);
+    const sortedMovies = filteredMovies.sort((a, b) => {
+      if (typeof a[sortColumn.path] === "string") {
+        const nameA = a[sortColumn.path].toUpperCase();
+        const nameB = b[sortColumn.path].toUpperCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+      } else if (typeof a[sortColumn.path] === "number") {
+        return a[sortColumn.path] - b[sortColumn.path];
+      }
+      return 0;
+    });
+
+    if (this.state.sortColumn.order === "desc") {
+      sortedMovies.reverse();
+    }
+
+    const paginatedMovies = paginate(sortedMovies, currentPage, pageSize);
 
     return (
       <div className="row">
@@ -83,7 +102,15 @@ class Movies extends Component {
   };
 
   handleSort = (path) => {
-    console.log(path);
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.path === path) {
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    } else {
+      sortColumn.path = path;
+      sortColumn.order = "asc";
+    }
+
+    this.setState({ sortColumn });
   };
 }
 

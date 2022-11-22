@@ -8,7 +8,7 @@ const MoviesTable = (props) => {
       <thead>
         <tr>
           <th onClick={() => handleSort("title")}>Title</th>
-          <th onClick={() => handleSort("genre.name")}>Genre</th>
+          <th onClick={() => handleSort("genre")}>Genre</th>
           <th onClick={() => handleSort("numberInStock")}>Stock</th>
           <th onClick={() => handleSort("dailyRentalRate")}>Rate</th>
           <th></th>
