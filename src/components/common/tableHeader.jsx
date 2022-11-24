@@ -9,9 +9,10 @@ class TableHeader extends Component {
             <th
               key={column.path || column.key}
               onClick={() => this.determineSortOrder(column.path)}
-              style={{ cursor: "poitner" }}
             >
-              {column.label} {this.renderSortIcon(column)}
+              <span style={{ cursor: "pointer" }}>
+                {column.label} {this.renderSortIcon(column)}
+              </span>
             </th>
           ))}
         </tr>
