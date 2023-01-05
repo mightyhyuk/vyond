@@ -1,14 +1,23 @@
+import PropTypes from "prop-types";
+
 const Like = (props) => {
+  const { liked, handleLike } = props;
+
   let classes = "fa-heart fa-";
-  classes += props.liked ? "solid" : "regular";
+  classes += liked ? "solid" : "regular";
 
   return (
     <i
-      onClick={props.handleLike}
+      onClick={handleLike}
       style={{ cursor: "pointer" }}
       className={classes}
     ></i>
   );
+};
+
+Like.propTypes = {
+  liked: PropTypes.bool,
+  handleLike: PropTypes.func,
 };
 
 export default Like;
