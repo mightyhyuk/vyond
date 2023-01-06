@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Like from "./common/like";
 import TableHeader from "./common/tableHeader";
 
@@ -53,5 +54,13 @@ class MoviesTable extends Component {
     );
   }
 }
+
+MoviesTable.propTypes = {
+  movies: PropTypes.array,
+  handleDelete: PropTypes.func,
+  handleLike: PropTypes.func,
+  sortColumn: PropTypes.object,
+  handleSort: PropTypes.func,
+};
 
 export default MoviesTable;
