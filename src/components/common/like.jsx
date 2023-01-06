@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 
 const Like = (props) => {
   const { liked, handleLike } = props;
-
-  let classes = "fa-heart fa-";
-  classes += liked ? "solid" : "regular";
+  const classes = "fa-heart fa-" + (liked ? "solid" : "regular");
 
   return (
     <i
